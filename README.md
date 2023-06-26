@@ -1,6 +1,6 @@
 ## About Project
 
-LaraveL Breeze API & Vue 3 Authentication with Pinia and Tailwind CSS.
+Laravel Breeze API & Vue 3 Authentication with Pinia and Tailwind CSS.
 
 ### Project Folders
 
@@ -17,7 +17,7 @@ LaraveL Breeze API & Vue 3 Authentication with Pinia and Tailwind CSS.
 
 ### Stack Used
 
--   PHP 8 - [XAMPP](https://www.apachefriends.org/)
+-   PHP 8 & Apache 2 using [XAMPP](https://www.apachefriends.org/)
 -   Laravel 10
 -   [Vue 3](https://vuejs.org/) with [Vue-Router](https://router.vuejs.org/installation.html)
 -   [Pinia](https://pinia.vuejs.org/)
@@ -62,7 +62,16 @@ LaraveL Breeze API & Vue 3 Authentication with Pinia and Tailwind CSS.
   php artisan migrate --seed
 ```
 
-6. Start the local development server (Laravel)
+8. Configure .env (Environment) - frontend url, sanctum stateful domains, session domain & database
+
+```bash
+  FRONTEND_URL=http://localhost:3000
+  SANCTUM_STATEFUL_DOMAINS = localhost:3000
+  SESSION_DOMAIN = localhost
+  DB_DATABASE=laravel_breeze_api (your desired db name)
+```
+
+7. Start the local development server (Laravel)
 
 ```bash
   php artisan serve
