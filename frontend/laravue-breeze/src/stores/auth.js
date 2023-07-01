@@ -112,6 +112,11 @@ export const useAuthStore = defineStore("auth", () => {
         isLoading.value = false;
     };
 
+    const isLoggedIn = async () => {
+        if (!user.value) await getCurrentUser();
+        return user.value !== null;
+    };
+
     // Static medthod
     router.beforeEach((to, from) => {
         if (to.path !== from.path && errors.value) {
@@ -130,6 +135,7 @@ export const useAuthStore = defineStore("auth", () => {
         logout,
         forgotPassword,
         resetPassword,
+        isLoggedIn,
     };
 });
 

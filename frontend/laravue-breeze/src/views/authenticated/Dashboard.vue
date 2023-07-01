@@ -1,27 +1,14 @@
 <script setup>
-import { onMounted } from "vue";
-
+import LoadingFull from "@/components/LoadingFull.vue";
 /* Using stores pinia */
 import { useAuthStore } from "@/stores/auth.js";
 
 const authStore = useAuthStore();
-onMounted(() => {
-    authStore.getCurrentUser();
-});
-
-/* Using composables */
-// import useAuth from "@/composables/auth.js";
-
-// const { user, getCurrentUser } = useAuth();
-// const emit = defineEmits(["mounted"]);
-
-// onMounted(() => {
-//     getCurrentUser();
-//     emit("mounted", user);
-// });
 </script>
+
 <template>
-    <section class="md:container">
+    <LoadingFull :show="!authStore.user" />
+    <section class="md:container pt-4" v-show="authStore.user">
         <h1 class="text-lg font-medium text-center py-3 bg-gray-100 rounded">
             Welcome {{ authStore?.user?.name }}
         </h1>

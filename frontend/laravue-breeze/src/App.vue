@@ -1,17 +1,28 @@
 <script setup>
-import { RouterView } from "vue-router";
+import { ref } from "vue";
+import { RouterView, useRouter } from "vue-router";
 import Nav from "@/views/layouts/Nav.vue";
 
-/* Using composables */
-// import useAuth from "@/composables/auth.js";
-// const user = ref(null);
-// const getCurrentUser = (data) => (user.value = data);
+/* Using stores pinia */
+import { useAuthStore } from "@/stores/auth.js";
+
+const authStore = useAuthStore();
+const router = useRouter();
+const isLoggedIn = ref(authStore.isLoggedIn());
+
+router.beforeEach((to, from) => {
+    if (to.meta.middleware === "auth") {
+        if (!isLoggedIn) return { path: "/login" };
+    } else {
+        if (isLoggedIn) return { path: "/dashboard" };
+    }
+});
 </script>
 <template>
     <header>
         <Nav />
     </header>
-    <main class="max-w-7xl mx-auto min-h-screen pt-4">
+    <main class="max-w-7xl mx-auto min-h-screen">
         <RouterView />
     </main>
 </template>

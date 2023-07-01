@@ -7,27 +7,31 @@ const routes = [
         path: "/dashboard",
         name: "dashboard",
         component: () => import("@/views/authenticated/Dashboard.vue"),
-        // meta: { requiresAuth: true },
+        meta: { middleware: "auth" },
     },
     {
         path: "/login",
         name: "login",
         component: () => import("@/views/auth/Login.vue"),
+        meta: { middleware: "guest" },
     },
     {
         path: "/register",
         name: "register",
         component: () => import("@/views/auth/Register.vue"),
+        meta: { middleware: "guest" },
     },
     {
         path: "/forgot-password",
         name: "forgot-password",
         component: () => import("@/views/auth/ForgotPassword.vue"),
+        meta: { middleware: "guest" },
     },
     {
         path: "/password-reset/:token",
         name: "password-reset",
         component: () => import("@/views/auth/ResetPassword.vue"),
+        meta: { middleware: "guest" },
     },
 ];
 
