@@ -11,6 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
     const user = ref(null);
     const errors = ref([]);
     const status = ref(null);
+    const isLoggedIn = ref(false);
     const isLoading = ref(false);
 
     /* Getters = computed() */
@@ -24,12 +25,16 @@ export const useAuthStore = defineStore("auth", () => {
 
     const getCurrentUser = async () => {
         errors.value = [];
+        isLoggedIn.value = false;
         try {
             const data = await axios.get("/api/user");
             user.value = data.data;
+            isLoggedIn.value = true;
         } catch (error) {
             if (error.response.status === 422) {
                 errors.value = error.response.data.errors;
+            } else if (error.response.status === 401) {
+                user.value = null;
             } else {
                 console.log(error);
             }
@@ -76,7 +81,8 @@ export const useAuthStore = defineStore("auth", () => {
         if (confirm("Are you sure?")) {
             await axios.post("/logout");
             user.value = null;
-            router.push({ name: "login" });
+            isLoggedIn.value = false;
+            await router.push({ name: "login" });
         }
     };
 
@@ -112,9 +118,8 @@ export const useAuthStore = defineStore("auth", () => {
         isLoading.value = false;
     };
 
-    const isLoggedIn = async () => {
-        if (!user.value) await getCurrentUser();
-        return user.value !== null;
+    const checkUserAuth = async () => {
+        if (!isLoggedIn.value) await getCurrentUser();
     };
 
     // Static medthod
@@ -128,6 +133,7 @@ export const useAuthStore = defineStore("auth", () => {
         user,
         errors,
         status,
+        isLoggedIn,
         isLoading,
         getCurrentUser,
         login,
@@ -135,7 +141,7 @@ export const useAuthStore = defineStore("auth", () => {
         logout,
         forgotPassword,
         resetPassword,
-        isLoggedIn,
+        checkUserAuth,
     };
 });
 

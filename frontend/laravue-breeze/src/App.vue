@@ -1,22 +1,23 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { RouterView, useRouter } from "vue-router";
 import Nav from "@/views/layouts/Nav.vue";
 
 /* Using stores pinia */
 import { useAuthStore } from "@/stores/auth.js";
 
-const authStore = useAuthStore();
-const router = useRouter();
-const isLoggedIn = ref(authStore.isLoggedIn());
+// const router = useRouter();
 
-router.beforeEach((to, from) => {
-    if (to.meta.middleware === "auth") {
-        if (!isLoggedIn) return { path: "/login" };
-    } else {
-        if (isLoggedIn) return { path: "/dashboard" };
-    }
-});
+// router.beforeEach(async (to, from) => {
+//     const authStore = useAuthStore();
+//     await authStore.checkUserAuth();
+
+//     if (to.meta.middleware === "auth") {
+//         if (!authStore.isLoggedIn) return "/login";
+//     } else {
+//         if (authStore.isLoggedIn) return "/dashboard";
+//     }
+// });
 </script>
 <template>
     <header>
